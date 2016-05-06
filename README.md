@@ -1,0 +1,2 @@
+# CloseEnoughEquality
+.Net Equality library
