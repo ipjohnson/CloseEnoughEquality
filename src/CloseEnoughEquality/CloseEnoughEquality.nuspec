@@ -10,9 +10,9 @@
     <projectUrl>https://github.com/ipjohnson/CloseEnoughEquality</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple C# library to test if two objects are close enough to be considered equal.</description>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>Updates logic to compare out of order lists and adds IsCloseEnoughTo extension</releaseNotes>
     <copyright>Copyright ©  2016</copyright>
-    <tags>.Net Equality deep compare</tags>
+    <tags>.net Equality deep compare</tags>
     <dependencies />
   </metadata>
 </package>
