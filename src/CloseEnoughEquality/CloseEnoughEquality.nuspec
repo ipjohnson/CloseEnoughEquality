@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>CloseEnoughEquality</id>
-    <version>1.0.0</version>
+    <version>$version$</version>
     <title>CloseEnoughEquality</title>
     <authors>Ian Johnson</authors>
     <owners>Ian Johnson</owners>
