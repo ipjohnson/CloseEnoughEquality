@@ -10,6 +10,8 @@ namespace CloseEnoughEquality
 {
     public interface ICloseEnoughConfiguration
     {
+        bool GenerateDiscrepancy { get; set; }
+
         void AllowTypeConversion(bool allow, Func<IPropertyInfo, bool> filter);
 
         void StringCaseSensitive(bool value, Func<IPropertyInfo, bool> filter);
@@ -65,8 +67,10 @@ namespace CloseEnoughEquality
         IReadOnlyList<ICloseEnoughDiscrepancy> GetDiscrepenacies();
 
         bool ThrowsException { get; set; }
+        
+        void IgnoreUnmatchedProperties(bool value, Func<IPropertyInfo,bool> filter);
 
-        bool AllowExtraRightProperties { get; set; }
+        bool IgnoreUnmatchedProperties(IPropertyInfo propertyInfo);
     }
 
     public class CloseEnoughConfiguration : ICloseEnoughConfiguration
@@ -74,6 +78,7 @@ namespace CloseEnoughEquality
         private Dictionary<Type, List<IEqualityWrapper>> _equalityWrappers = new Dictionary<Type, List<IEqualityWrapper>>();
         private ClassEqualityComparer _defaultComparer;
         private List<PropertyFilteredConfiguration<bool>> _allowTypeConversion;
+        private List<PropertyFilteredConfiguration<bool>> _ignoreUnmatchedProperties;
         private List<PropertyFilteredConfiguration<bool>> _stringCaseSensitive;
         private List<PropertyFilteredConfiguration<bool>> _useCustomEquals;
         private List<PropertyFilteredConfiguration<float>> _floatEpsilon;
@@ -98,6 +103,8 @@ namespace CloseEnoughEquality
 
         public bool AllowExtraRightProperties { get; set; }
 
+        public bool GenerateDiscrepancy { get; set; }
+
         public CloseEnoughConfiguration()
         {
             Initialize();
@@ -108,6 +115,7 @@ namespace CloseEnoughEquality
             AllowedDiscrepancies = 0;
             ThrowsException = false;
             AllowExtraRightProperties = true;
+            GenerateDiscrepancy = true;
 
             _defaultComparer = new ClassEqualityComparer(this);
             AddEqualityWrapper<double>(new DoubleEqualityComparer(this));
@@ -429,6 +437,31 @@ namespace CloseEnoughEquality
         public void AddDiscrepancy(ICloseEnoughDiscrepancy discrepancy)
         {
             _discrepancy.Add(discrepancy);
+        }
+
+        public void IgnoreUnmatchedProperties(bool value, Func<IPropertyInfo, bool> filter)
+        {
+            if(_ignoreUnmatchedProperties == null)
+            {
+                _ignoreUnmatchedProperties = new List<PropertyFilteredConfiguration<bool>>();
+            }
+
+            _ignoreUnmatchedProperties.Add(new PropertyFilteredConfiguration<bool> { Value = value, Filter = filter });
+        }
+
+        public bool IgnoreUnmatchedProperties(IPropertyInfo propertyInfo)
+        {
+            if(_ignoreUnmatchedProperties != null)
+            {
+                var match = _ignoreUnmatchedProperties.LastOrDefault(x => x.Matches(propertyInfo));
+
+                if(match != null)
+                {
+                    return match.Value;
+                }
+            }
+
+            return false;
         }
     }
 }

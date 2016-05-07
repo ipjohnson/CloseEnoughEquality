@@ -7,3 +7,7 @@
 /src/packages
 /src/CloseEnoughEquality/obj/Debug
 /src/CloseEnoughEquality.Tests/bin/Debug
+/src/CloseEnoughEquality/bin/Release
+/src/CloseEnoughEquality/obj/Release
+/src/CloseEnoughEquality.Tests/bin/Release
+/src/CloseEnoughEquality.Tests/obj/Release

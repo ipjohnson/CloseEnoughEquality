@@ -21,7 +21,7 @@ namespace CloseEnoughEquality.Impl
 
         private ICloseEnoughConfiguration _configuration;
 
-        public bool GeneratesDiscrepancy {  get { return true; } }
+        public bool GeneratesDiscrepancy { get { return true; } }
 
         public ClassEqualityComparer(ICloseEnoughConfiguration configuration)
         {
@@ -35,40 +35,40 @@ namespace CloseEnoughEquality.Impl
 
         public bool Equals(object left, object right, IPropertyInfo property)
         {
-            if(left == null)
+            if (left == null)
             {
                 return right == null;
             }
-            else if(right == null)
+            else if (right == null)
             {
                 return false;
             }
 
-            if(left.GetType() == right.GetType() && _configuration.UseCustomEquals(property))
+            if (left.GetType() == right.GetType() && _configuration.UseCustomEquals(property))
             {
                 MethodInfo equalsMethod = null;
 
-                foreach(var method in left.GetType().GetRuntimeMethods())
+                foreach (var method in left.GetType().GetRuntimeMethods())
                 {
-                    if(!method.IsStatic && method.IsPublic && method.Name == "Equals")
+                    if (!method.IsStatic && method.IsPublic && method.Name == "Equals")
                     {
                         var parameters = method.GetParameters();
 
-                        if(parameters.Length == 1 && parameters[0].ParameterType == typeof(object))
+                        if (parameters.Length == 1 && parameters[0].ParameterType == typeof(object))
                         {
                             equalsMethod = method;
                         }
                     }
                 }
 
-                if(equalsMethod != null && 
+                if (equalsMethod != null &&
                    equalsMethod.DeclaringType != typeof(object))
                 {
                     return (bool)equalsMethod.Invoke(left, new object[] { right });
                 }
             }
 
-            if(IsDictionaryType(left.GetType()))
+            if (IsDictionaryType(left.GetType()))
             {
                 List<IPropertyInfo> leftList = GetDictionaryValues(left);
                 List<IPropertyInfo> rightList = null;
@@ -77,7 +77,7 @@ namespace CloseEnoughEquality.Impl
                 {
                     rightList = GetDictionaryValues(left);
                 }
-                else if(IsEnumerableType(right.GetType()))
+                else if (IsEnumerableType(right.GetType()))
                 {
                     return false;
                 }
@@ -88,7 +88,7 @@ namespace CloseEnoughEquality.Impl
 
                 return ComparePropertyLists(leftList, rightList, property);
             }
-            else if(IsDictionaryType(right.GetType()))
+            else if (IsDictionaryType(right.GetType()))
             {
                 var leftList = GetProperties(left);
                 var rightList = GetDictionaryValues(right);
@@ -125,21 +125,25 @@ namespace CloseEnoughEquality.Impl
             bool returnValue = true;
 
             List<IPropertyInfo> processed = null;
+            bool ignoreMissing = _configuration.IgnoreUnmatchedProperties(property);
 
-            if(!_configuration.AllowExtraRightProperties)
+            if (!ignoreMissing)
             {
                 processed = new List<IPropertyInfo>();
             }
 
-            foreach(var leftProperty in leftPropertyList)
+            foreach (var leftProperty in leftPropertyList)
             {
                 _configuration.PushCurrentPath(leftProperty.Name);
 
                 var rightProperty = rightPropertyList.FirstOrDefault(p => p.Name == leftProperty.Name);
 
-                if(rightProperty == null)
+                if (rightProperty == null)
                 {
-                    _configuration.AddMissingPropertyDiscrepancy(_configuration.CurrentPath);                    
+                    if (!ignoreMissing &&  _configuration.GenerateDiscrepancy)
+                    {
+                        _configuration.AddMissingPropertyDiscrepancy(_configuration.CurrentPath);
+                    }
                 }
                 else
                 {
@@ -150,31 +154,31 @@ namespace CloseEnoughEquality.Impl
 
                     var leftValue = leftProperty.GetValue();
                     var rightValue = rightProperty.GetValue();
-                    
-                    if(leftValue != null)
+
+                    if (leftValue != null)
                     {
-                        if(rightValue != null)
+                        if (rightValue != null)
                         {
-                            var wrapper =  _configuration.GetEqualityWrapper(leftValue.GetType(), leftProperty);
+                            var wrapper = _configuration.GetEqualityWrapper(leftValue.GetType(), leftProperty);
 
                             var localValue = wrapper.Equals(leftValue, rightValue, leftProperty);
 
-                            if(!localValue)
+                            if (!localValue)
                             {
                                 returnValue = false;
 
-                                if(!wrapper.GeneratesDiscrepancy)
+                                if (!wrapper.GeneratesDiscrepancy && _configuration.GenerateDiscrepancy)
                                 {
                                     _configuration.AddDiscrepancy(leftValue, rightValue);
                                 }
                             }
                         }
-                        else
+                        else if (_configuration.GenerateDiscrepancy)
                         {
                             _configuration.AddDiscrepancy(leftValue, rightValue);
                         }
                     }
-                    else if(rightValue != null)
+                    else if (rightValue != null && _configuration.GenerateDiscrepancy)
                     {
                         _configuration.AddDiscrepancy(leftValue, rightValue);
                     }
@@ -183,16 +187,16 @@ namespace CloseEnoughEquality.Impl
                 _configuration.PopCurrentPath();
             }
 
-            if(processed != null && processed.Count != leftPropertyList.Count)
+            if (processed != null && processed.Count != leftPropertyList.Count)
             {
                 var newRightList = new List<IPropertyInfo>(rightPropertyList);
 
-                foreach(var processedItem in processed)
+                foreach (var processedItem in processed)
                 {
                     newRightList.RemoveAll(p => p.Name == processedItem.Name);
                 }
 
-                foreach(var right in newRightList)
+                foreach (var right in newRightList)
                 {
                     _configuration.AddExtraPropertyDiscrepancy(_configuration.CurrentPath + "." + right.Name);
                 }
@@ -204,13 +208,13 @@ namespace CloseEnoughEquality.Impl
         private bool CompareEnumerables(object left, object right, IPropertyInfo property)
         {
             IReadOnlyList<object> leftReadOnly = left as IReadOnlyList<object>;
-            IReadOnlyList<object> rightReadOnly = right as IReadOnlyList<object>;
-            
-            if(leftReadOnly == null)
+            List<object> rightList = right as List<object>;
+
+            if (leftReadOnly == null)
             {
                 var newLeft = new List<object>();
 
-                foreach(var objectL in (IEnumerable)left)
+                foreach (var objectL in (IEnumerable)left)
                 {
                     newLeft.Add(objectL);
                 }
@@ -218,87 +222,87 @@ namespace CloseEnoughEquality.Impl
                 leftReadOnly = newLeft;
             }
 
-            if(rightReadOnly == null)
+            if (rightList == null)
             {
-                var newRight = new List<object>();
+                rightList = new List<object>();
 
-                foreach(var objectR in (IEnumerable)right)
+                foreach (var objectR in (IEnumerable)right)
                 {
-                    newRight.Add(objectR);
+                    rightList.Add(objectR);
+                }
+            }
+
+            bool ignoreUnmatched = _configuration.IgnoreUnmatchedProperties(property);
+
+            if (leftReadOnly.Count != rightList.Count && !ignoreUnmatched)
+            {
+                if (_configuration.GenerateDiscrepancy)
+                {
+                    _configuration.AddDiscrepancy(
+                        new ListCountDiscrepancy(_configuration.CurrentPath,
+                                             leftReadOnly.Count,
+                                             rightList.Count));
                 }
 
-                rightReadOnly = newRight;
-            }
-
-            if(leftReadOnly.Count > rightReadOnly.Count)
-            {
-                _configuration.AddDiscrepancy(
-                    new ListCountDiscrepancy(_configuration.CurrentPath, 
-                                             leftReadOnly.Count, 
-                                             rightReadOnly.Count));
-
                 return false;
             }
+            
+            bool returnValue = true;
 
-            if(leftReadOnly.Count < rightReadOnly.Count && 
-               !_configuration.AllowExtraRightProperties)
-            {
-                _configuration.AddDiscrepancy(
-                    new ListCountDiscrepancy(_configuration.CurrentPath, 
-                                             leftReadOnly.Count, 
-                                             rightReadOnly.Count));
-
-                return false;
-            }
-            bool returnValue = false;
-
-            for(int i = 0; i < leftReadOnly.Count; i++)
+            for (int i = 0; i < leftReadOnly.Count; i++)
             {
                 var leftValue = leftReadOnly[i];
-                var rightValue = rightReadOnly[i];
+                _configuration.GenerateDiscrepancy = false;
 
-                _configuration.PushCurrentPath(i.ToString());  
-                         
-                if (leftValue != null)
+                _configuration.PushCurrentPath(i.ToString());
+
+                var leftProperty = new ListPropertyInfo(left.GetType(), i.ToString(), leftValue);
+                var wrapper = _configuration.GetEqualityWrapper(leftValue.GetType(), leftProperty);
+                bool found = false;
+
+                for(int j = 0; j < rightList.Count; j++)
                 {
-                    if (rightValue != null)
+                    var rightValue = rightList[j];
+
+                    if (leftValue != null)
                     {
-                        var leftProperty = new ListPropertyInfo(left.GetType(), i.ToString(), leftValue);
+                        if (rightValue != null)
+                        {                            
+                            var localValue = wrapper.Equals(leftValue, rightValue, leftProperty);
 
-                        var wrapper = _configuration.GetEqualityWrapper(leftValue.GetType(), leftProperty);
-
-                        var localValue = wrapper.Equals(leftValue, rightValue, leftProperty);
-
-                        if (!localValue)
-                        {
-                            returnValue = false;
-
-                            if (!wrapper.GeneratesDiscrepancy)
+                            if(localValue)
                             {
-                                _configuration.AddDiscrepancy(leftValue, rightValue);
+                                rightList.RemoveAt(j);
+                                found = true;
+                                break;                                
                             }
                         }
                     }
-                    else
+                    else if(rightValue == null)
                     {
-                        _configuration.AddDiscrepancy(leftValue, rightValue);
-                    }
+                        found = true;
+                        break;
+                    }                
                 }
-                else if (rightValue != null)
+
+                _configuration.GenerateDiscrepancy = true;
+
+                if (!found && !ignoreUnmatched)
                 {
-                    _configuration.AddDiscrepancy(leftValue, rightValue);
+                    returnValue = false;
+                    _configuration.AddMissingPropertyDiscrepancy(_configuration.CurrentPath);
                 }
 
                 _configuration.PopCurrentPath();
             }
 
-            return true;
+            return returnValue;
         }
 
         private bool IsDictionaryType(Type type)
         {
             return type.GetTypeInfo().
-                        ImplementedInterfaces.Any(t => t.IsConstructedGenericType && 
+                        ImplementedInterfaces.Any(t => t.IsConstructedGenericType &&
                                                        (t.GetGenericTypeDefinition() == typeof(IDictionary<,>) ||
                                                         t.GetGenericTypeDefinition() == typeof(IReadOnlyDictionary<,>)));
 
@@ -306,7 +310,7 @@ namespace CloseEnoughEquality.Impl
 
         private bool IsEnumerableType(Type type)
         {
-            return type.GetTypeInfo().ImplementedInterfaces.Any(t => t.IsConstructedGenericType && 
+            return type.GetTypeInfo().ImplementedInterfaces.Any(t => t.IsConstructedGenericType &&
                                                                      t.GetTypeInfo().GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
 
@@ -341,19 +345,19 @@ namespace CloseEnoughEquality.Impl
 
         private List<IPropertyInfo> GetDictionaryValues(object propertiesObject)
         {
-            foreach(var interfaceP in propertiesObject.GetType().GetTypeInfo().ImplementedInterfaces)
+            foreach (var interfaceP in propertiesObject.GetType().GetTypeInfo().ImplementedInterfaces)
             {
-                if(interfaceP.IsConstructedGenericType)
+                if (interfaceP.IsConstructedGenericType)
                 {
                     var generic = interfaceP.GetTypeInfo().GetGenericTypeDefinition();
 
-                    if(generic == typeof(IDictionary<,>))
+                    if (generic == typeof(IDictionary<,>))
                     {
                         var closedMethod = _getGenericDictionaryValuesMethod.MakeGenericMethod(interfaceP.GenericTypeArguments);
 
                         return (List<IPropertyInfo>)closedMethod.Invoke(this, new object[] { propertiesObject });
                     }
-                    else if(generic == typeof(IReadOnlyDictionary<,>))
+                    else if (generic == typeof(IReadOnlyDictionary<,>))
                     {
                         var closedMethod = _getGenericReadOnlyDictionaryValues.MakeGenericMethod(interfaceP.GenericTypeArguments);
 
@@ -365,11 +369,11 @@ namespace CloseEnoughEquality.Impl
             return new List<IPropertyInfo>();
         }
 
-        private List<IPropertyInfo> GetGenericDictionaryValues<TKey,TValue>(IDictionary<TKey,TValue> dictionary)
+        private List<IPropertyInfo> GetGenericDictionaryValues<TKey, TValue>(IDictionary<TKey, TValue> dictionary)
         {
             List<IPropertyInfo> returnValue = new List<IPropertyInfo>();
 
-            foreach(var entry in dictionary)
+            foreach (var entry in dictionary)
             {
                 returnValue.Add(new DictionaryPropertyInfo<TKey, TValue>(dictionary, entry.Key, entry.Value));
             }
@@ -377,7 +381,7 @@ namespace CloseEnoughEquality.Impl
             return returnValue;
         }
 
-        private List<IPropertyInfo> GetGenericReadOnlyDictionaryValues<TKey,TValue>(IReadOnlyDictionary<TKey,TValue> dictionary)
+        private List<IPropertyInfo> GetGenericReadOnlyDictionaryValues<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> dictionary)
         {
             List<IPropertyInfo> returnValue = new List<IPropertyInfo>();
 
@@ -385,7 +389,7 @@ namespace CloseEnoughEquality.Impl
             {
                 returnValue.Add(new ReadOnlyDictionaryPropertyInfo<TKey, TValue>(dictionary, entry.Key, entry.Value));
             }
-            
+
             return returnValue;
         }
     }

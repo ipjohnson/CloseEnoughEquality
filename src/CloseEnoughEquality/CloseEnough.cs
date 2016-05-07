@@ -10,6 +10,11 @@ namespace CloseEnoughEquality
 {
     public static class CloseEnough
     {
+        public static void MustEqual<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
+        {            
+            new CloseEnough<TLeft, TRight>(c => { c.ThrowsExceptionIfDiscrepancies(true); configuration?.Invoke(c); }).Equals(left, right);
+        }
+
         public static IReadOnlyList<ICloseEnoughDiscrepancy> GetDiscrepancies<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
         {
             return new CloseEnough<TLeft, TRight>(configuration).GetDiscrepancies(left, right);

@@ -17,7 +17,7 @@ namespace CloseEnoughEquality
         /// <param name="numberOfDiscrepancy"></param>
         /// <returns></returns>
         ICloseEnoughConfigurationSyntax<T> AllowedDiscrepancies(int numberOfDiscrepancy = 0);
-
+        
         /// <summary>
         /// Allow for type conversion to compare, true by default
         /// </summary>
@@ -53,6 +53,14 @@ namespace CloseEnoughEquality
         /// <param name="epsilon"></param>
         /// <returns></returns>
         ICloseEnoughConfigurationSyntax<T> DecimalEpsilon(decimal epsilon = 0, Func<IPropertyInfo, bool> filter = null);
+
+        /// <summary>
+        /// Ignore properties on the left object that don't exist on the right
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        ICloseEnoughConfigurationSyntax<T> IgnoreUnmatchedProperties(bool value = true, Func<IPropertyInfo, bool> filter = null);
 
         /// <summary>
         /// Skip a specified property when comparing
@@ -152,6 +160,11 @@ namespace CloseEnoughEquality
             _configuration.FloatEpsilon(epsilon, filter);
 
             return this;
+        }
+
+        public ICloseEnoughConfigurationSyntax<T> IgnoreUnmatchedProperties(bool value = true, Func<IPropertyInfo, bool> filter = null)
+        {
+            throw new NotImplementedException();
         }
 
         public ICloseEnoughConfigurationSyntax<T> SkipPropertiesOfType(Type type, Func<IPropertyInfo, bool> filter = null)
