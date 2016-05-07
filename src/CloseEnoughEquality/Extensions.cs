@@ -8,6 +8,25 @@ namespace CloseEnoughEquality
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Test that the object is close enough
+        /// </summary>
+        /// <typeparam name="TLeft"></typeparam>
+        /// <typeparam name="TRight"></typeparam>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        public static bool IsCloseEnoughTo<TLeft,TRight>(this TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
+        {
+            return CloseEnough.Equals(left, right, configuration);
+        }
+
+        /// <summary>
+        /// Gets a concatinated string of the discrepancies
+        /// </summary>
+        /// <param name="discrepancies">all discrepancies</param>
+        /// <returns></returns>
         public static string GetDiscrepancyString(this IReadOnlyList<ICloseEnoughDiscrepancy> discrepancies)
         {
             StringBuilder builder = new StringBuilder();
