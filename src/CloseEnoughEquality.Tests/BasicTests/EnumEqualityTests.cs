@@ -21,7 +21,7 @@ namespace CloseEnoughEquality.Tests.BasicTests
         }
 
         [Fact]
-        public void CloseEnough_EnumClassNotEqual_ReturnTrue()
+        public void CloseEnough_EnumClassNotEqual_ReturnFalse()
         {
             var class1 = new EnumClass { EnumValue = TestEnum.TestValue };
             var class2 = new EnumClass { EnumValue = TestEnum.TestValue2 };
