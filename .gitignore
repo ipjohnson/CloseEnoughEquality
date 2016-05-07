@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/.vs/CloseEnoughEquality/v14/.suo
+/src/CloseEnoughEquality/bin/Debug
+/src/packages
+/src/CloseEnoughEquality/obj/Debug
+/src/CloseEnoughEquality.Tests/bin/Debug

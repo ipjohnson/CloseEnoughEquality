@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>CloseEnoughEquality</id>
+    <version>1.0.0</version>
+    <title>CloseEnoughEquality</title>
+    <authors>Ian Johnson</authors>
+    <owners>Ian Johnson</owners>
+    <licenseUrl>https://github.com/ipjohnson/CloseEnoughEquality/blob/master/License.md</licenseUrl>
+    <projectUrl>https://github.com/ipjohnson/CloseEnoughEquality</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple C# library to test if two objects are close enough to be considered equal.</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>Copyright ©  2016</copyright>
+    <tags>.Net Equality deep compare</tags>
+    <dependencies />
+  </metadata>
+</package>
