@@ -18,7 +18,7 @@ namespace CloseEnoughEquality
 
         void DoubleEpsilon(double epsilon, Func<IPropertyInfo, bool> filter = null);
 
-        void  DecimalEpsilon(decimal epsilon, Func<IPropertyInfo, bool> filter = null);
+        void DecimalEpsilon(decimal epsilon, Func<IPropertyInfo, bool> filter = null);
 
         void SkipProperty(PropertyInfo property);
 
@@ -210,6 +210,11 @@ namespace CloseEnoughEquality
         {
             List<IEqualityWrapper> wrappers;
 
+            if(t.GetTypeInfo().IsEnum)
+            {
+                return new EnumEqualityComparer(this);
+            }
+
             if(_equalityWrappers.TryGetValue(t,out wrappers))
             {
                 var match = wrappers.LastOrDefault(w => w.Applies(property));
@@ -358,6 +363,19 @@ namespace CloseEnoughEquality
             {
                 wrapperList = new List<IEqualityWrapper>();
                 _equalityWrappers[typeof(T)] = wrapperList;
+            }
+
+            wrapperList.Add(wrapper);
+        }
+
+        private void AddEqualityWrapper(Type type, IEqualityWrapper wrapper)
+        {
+            List<IEqualityWrapper> wrapperList;
+
+            if (!_equalityWrappers.TryGetValue(type, out wrapperList))
+            {
+                wrapperList = new List<IEqualityWrapper>();
+                _equalityWrappers[type] = wrapperList;
             }
 
             wrapperList.Add(wrapper);

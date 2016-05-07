@@ -43,10 +43,13 @@
     <Compile Include="CloseEnoughConfigurationSyntax.cs" />
     <Compile Include="CloseEnoughDiscrepancy.cs" />
     <Compile Include="DiscrepancyException.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ForProperties.cs" />
     <Compile Include="Impl\ClassEqualityComparer.cs" />
     <Compile Include="Impl\DecimalEqualityComparer.cs" />
     <Compile Include="Impl\DictionaryPropertyInfo.cs" />
     <Compile Include="Impl\DoubleEqualityComparer.cs" />
+    <Compile Include="Impl\EnumEqualityComparer.cs" />
     <Compile Include="Impl\EqualityWrapper.cs" />
     <Compile Include="Impl\FilteredConfiguration.cs" />
     <Compile Include="Impl\FloatEqualityComparer.cs" />

@@ -10,23 +10,6 @@ namespace CloseEnoughEquality
 {
     public static class CloseEnough
     {
-        public static string GetDiscrepancyString(this IReadOnlyList<ICloseEnoughDiscrepancy> discrepancies)
-        {
-            StringBuilder builder = new StringBuilder();
-
-            for (int i = 0; i < discrepancies.Count; i++)
-            {
-                builder.Append(discrepancies[i]);
-
-                if(i < discrepancies.Count - 1)
-                {
-                    builder.AppendLine();
-                }
-            }
-
-            return builder.ToString();
-        }
-
         public static IReadOnlyList<ICloseEnoughDiscrepancy> GetDiscrepancies<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
         {
             return new CloseEnough<TLeft, TRight>(configuration).GetDiscrepancies(left, right);

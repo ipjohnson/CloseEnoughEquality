@@ -71,6 +71,7 @@
     <Compile Include="BasicTests\DecimalEqualityTests.cs" />
     <Compile Include="BasicTests\DictionaryEqualityTest.cs" />
     <Compile Include="BasicTests\DoubleEqualityTests.cs" />
+    <Compile Include="BasicTests\EnumEqualityTests.cs" />
     <Compile Include="BasicTests\IntEqualityTests.cs" />
     <Compile Include="BasicTests\ListEqualityTests.cs" />
     <Compile Include="BasicTests\LongEqualityTests.cs" />
@@ -78,10 +79,12 @@
     <Compile Include="BasicTests\StringEqualityTests.cs" />
     <Compile Include="BasicTests\UIntEqualityTests.cs" />
     <Compile Include="BasicTests\ULongEqualityTests.cs" />
+    <Compile Include="Classes\Basic\EnumClass.cs" />
     <Compile Include="Classes\Basic\ListClasses.cs" />
     <Compile Include="Classes\Basic\NestedClass.cs" />
     <Compile Include="Classes\Basic\SimpleObject.cs" />
     <Compile Include="Classes\Basic\SmallObject.cs" />
+    <Compile Include="Classes\Basic\TestEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

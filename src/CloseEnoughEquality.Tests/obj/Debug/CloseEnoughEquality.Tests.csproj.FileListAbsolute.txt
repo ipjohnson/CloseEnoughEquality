@@ -23,3 +23,28 @@ c:\users\ian\documents\visual studio 2015\Projects\CloseEnoughEquality\CloseEnou
 c:\users\ian\documents\visual studio 2015\Projects\CloseEnoughEquality\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.xml
 c:\users\ian\documents\visual studio 2015\Projects\CloseEnoughEquality\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.Core.pdb
 c:\users\ian\documents\visual studio 2015\Projects\CloseEnoughEquality\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.Core.xml
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.runner.visualstudio.testadapter.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.runner.utility.desktop.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.abstractions.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\CloseEnoughEquality.Tests.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\CloseEnoughEquality.Tests.pdb
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\CloseEnoughEquality.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.Core.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.assert.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.core.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.execution.desktop.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\CloseEnoughEquality.pdb
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.pdb
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.xml
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.Core.pdb
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\FluentAssertions.Core.xml
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.assert.pdb
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.assert.xml
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.core.pdb
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.core.xml
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.execution.desktop.pdb
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\bin\Debug\xunit.execution.desktop.xml
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\obj\Debug\CloseEnoughEquality.Tests.csprojResolveAssemblyReference.cache
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\obj\Debug\CloseEnoughEquality.Tests.dll
+C:\Users\ian\Source\Repos\CloseEnoughEquality\src\CloseEnoughEquality.Tests\obj\Debug\CloseEnoughEquality.Tests.pdb
