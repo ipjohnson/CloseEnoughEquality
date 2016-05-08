@@ -11,7 +11,7 @@ namespace CloseEnoughEquality
     public static class CloseEnough
     {
         public static void MustEqual<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
-        {            
+        {           
             new CloseEnough<TLeft, TRight>(c => { c.ThrowsExceptionIfDiscrepancies(true); configuration?.Invoke(c); }).Equals(left, right);
         }
 
@@ -72,7 +72,13 @@ namespace CloseEnoughEquality
             }
             else
             {
-                _configuration.GetEqualityWrapper(typeof(TLeft)).Equals(left, right, new RootPropertyInfo(left));
+                var wrapper = _configuration.GetEqualityWrapper(typeof(TLeft));
+
+                if(!wrapper.Equals(left, right, new RootPropertyInfo(left)) && 
+                   !wrapper.GeneratesDiscrepancy)
+                {
+                    _configuration.AddDiscrepancy(left, right);
+                }
             }
 
             var discrepancy = _configuration.GetDiscrepenacies();

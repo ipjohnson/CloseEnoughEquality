@@ -16,6 +16,10 @@ namespace CloseEnoughEquality
 
         void StringCaseSensitive(bool value, Func<IPropertyInfo, bool> filter);
 
+        void DateTimeComparisonMode(DateTimeComparisonMode mode, Func<IPropertyInfo, bool> filter);
+
+        DateTimeComparisonMode DateTimeComparisonMode(IPropertyInfo property);
+
         void FloatEpsilon(float epsilon, Func<IPropertyInfo, bool> filter = null);
 
         void DoubleEpsilon(double epsilon, Func<IPropertyInfo, bool> filter = null);
@@ -81,6 +85,7 @@ namespace CloseEnoughEquality
         private List<PropertyFilteredConfiguration<bool>> _ignoreUnmatchedProperties;
         private List<PropertyFilteredConfiguration<bool>> _stringCaseSensitive;
         private List<PropertyFilteredConfiguration<bool>> _useCustomEquals;
+        private List<PropertyFilteredConfiguration<DateTimeComparisonMode>> _dateTimeComparisonMode;
         private List<PropertyFilteredConfiguration<float>> _floatEpsilon;
         private List<PropertyFilteredConfiguration<double>> _doubleEpsilon;
         private List<PropertyFilteredConfiguration<decimal>> _decimalEpsilon;
@@ -129,7 +134,7 @@ namespace CloseEnoughEquality
             AddEqualityWrapper<ulong>(new SimpleEqualityComparer<ulong>(this));
             AddEqualityWrapper<bool>(new SimpleEqualityComparer<bool>(this));
             AddEqualityWrapper<TimeSpan>(new SimpleEqualityComparer<TimeSpan>(this));
-            AddEqualityWrapper<DateTime>(new SimpleEqualityComparer<DateTime>(this));
+            AddEqualityWrapper<DateTime>(new DateTimeEqualityComparer(this));
             AddEqualityWrapper<DateTimeOffset>(new SimpleEqualityComparer<DateTimeOffset>(this));
             AddEqualityWrapper<string>(new StringEqualityComparer(this));
         }
@@ -462,6 +467,31 @@ namespace CloseEnoughEquality
             }
 
             return false;
+        }
+
+        public void DateTimeComparisonMode(DateTimeComparisonMode mode, Func<IPropertyInfo, bool> filter)
+        {
+            if(_dateTimeComparisonMode == null)
+            {
+                _dateTimeComparisonMode = new List<PropertyFilteredConfiguration<DateTimeComparisonMode>>();
+            }
+
+            _dateTimeComparisonMode.Add(new PropertyFilteredConfiguration<DateTimeComparisonMode> { Value = mode, Filter = filter });
+        }
+
+        public DateTimeComparisonMode DateTimeComparisonMode(IPropertyInfo property)
+        {
+            if(_dateTimeComparisonMode != null)
+            {
+                var match = _dateTimeComparisonMode.LastOrDefault(p => p.Matches(property));
+
+                if(match != null)
+                {
+                    return match.Value;
+                }
+            }
+
+            return CloseEnoughEquality.DateTimeComparisonMode.Millisecond;
         }
     }
 }

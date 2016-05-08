@@ -68,9 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicTests\ByteEqualityTests.cs" />
+    <Compile Include="BasicTests\DateTimeEqualityTests.cs" />
     <Compile Include="BasicTests\DecimalEqualityTests.cs" />
     <Compile Include="BasicTests\DictionaryEqualityTest.cs" />
     <Compile Include="BasicTests\DoubleEqualityTests.cs" />
+    <Compile Include="BasicTests\DynamicTypeTests.cs" />
     <Compile Include="BasicTests\EnumEqualityTests.cs" />
     <Compile Include="BasicTests\IntEqualityTests.cs" />
     <Compile Include="BasicTests\ListEqualityTests.cs" />

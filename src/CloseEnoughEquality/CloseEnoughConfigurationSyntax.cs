@@ -9,6 +9,18 @@ using System.Threading.Tasks;
 
 namespace CloseEnoughEquality
 {
+    public enum DateTimeComparisonMode
+    {
+        Exact,
+        Millisecond,
+        Second,
+        Minute,
+        Hour,
+        Day,
+        Month,
+        Year
+    }
+
     public interface ICloseEnoughConfigurationSyntax<T>
     {
         /// <summary>
@@ -39,6 +51,14 @@ namespace CloseEnoughEquality
         /// <param name="filter"></param>
         /// <returns></returns>
         ICloseEnoughConfigurationSyntax<T> FloatEpsilon(float epsilon = float.Epsilon, Func<IPropertyInfo, bool> filter = null);
+
+        /// <summary>
+        /// DateTime Comparison Mode
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        ICloseEnoughConfigurationSyntax<T> DateTimeComparisonMode(DateTimeComparisonMode mode = CloseEnoughEquality.DateTimeComparisonMode.Millisecond, Func<IPropertyInfo, bool> filter = null);
 
         /// <summary>
         /// Double epsilon, used when comparing doubles
@@ -138,6 +158,12 @@ namespace CloseEnoughEquality
         {
             _configuration.AllowTypeConversion(allow, filter);
 
+            return this;
+        }
+
+        public ICloseEnoughConfigurationSyntax<T> DateTimeComparisonMode(DateTimeComparisonMode mode = CloseEnoughEquality.DateTimeComparisonMode.Millisecond, Func<IPropertyInfo, bool> filter = null)
+        {
+            _configuration.DateTimeComparisonMode(mode, filter);
             return this;
         }
 
