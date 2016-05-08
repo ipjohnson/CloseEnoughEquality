@@ -24,7 +24,7 @@ namespace CloseEnoughEquality.Tests.BasicTests
         {
             DateTime now = DateTime.Now;
 
-            CloseEnough.Equals(now, now.AddMilliseconds(1)).Should().BeTrue();
+            CloseEnough.Equals(now, now.AddMilliseconds(1)).Should().BeFalse();
         }
 
         [Fact]
