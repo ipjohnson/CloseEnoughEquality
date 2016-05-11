@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="BasicTests\ByteEqualityTests.cs" />
     <Compile Include="BasicTests\CircularReferenceTests.cs" />
+    <Compile Include="BasicTests\IgnoreProperties.cs" />
     <Compile Include="BasicTests\DateTimeEqualityTests.cs" />
     <Compile Include="BasicTests\DecimalEqualityTests.cs" />
     <Compile Include="BasicTests\DictionaryEqualityTest.cs" />

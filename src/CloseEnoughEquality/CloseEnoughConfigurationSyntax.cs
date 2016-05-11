@@ -87,7 +87,7 @@ namespace CloseEnoughEquality
         /// </summary>
         /// <param name="skipProperty">property to skip</param>
         /// <returns></returns>
-        ICloseEnoughConfigurationSyntax<T> SkipProperty(Expression<Func<T,object>> skipProperty);
+        ICloseEnoughConfigurationSyntax<T> SkipProperty<TProp>(Expression<Func<T,TProp>> skipProperty);
 
         /// <summary>
         /// Skip a specific type of property when comparing
@@ -130,7 +130,7 @@ namespace CloseEnoughEquality
         ICloseEnoughConfigurationSyntax<T> UseComparer<TType>(IEqualityComparer<TType> comparer, Func<IPropertyInfo, bool> filter = null);
 
         /// <summary>
-        /// Use Equals method if they have been overriden from object
+        /// Use Equals method if they have been overriden from object, by default this is true
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="filter">filter for properties</param>
@@ -201,12 +201,12 @@ namespace CloseEnoughEquality
 
         public ICloseEnoughConfigurationSyntax<T> SkipPropertiesOfType<TSkip>(Func<IPropertyInfo, bool> filter = null)
         {
-            _configuration.SkipPropertiesOfType(typeof(T), filter);
+            _configuration.SkipPropertiesOfType(typeof(TSkip), filter);
 
             return this;
         }
 
-        public ICloseEnoughConfigurationSyntax<T> SkipProperty(Expression<Func<T,object>> skipProperty)
+        public ICloseEnoughConfigurationSyntax<T> SkipProperty<TProp>(Expression<Func<T,TProp>> skipProperty)
         {
             MemberExpression memberExpression = skipProperty.Body as MemberExpression;
             PropertyInfo propertyInfo = null;
@@ -220,7 +220,7 @@ namespace CloseEnoughEquality
                 throw new Exception("Linq expression cannot be used, must be property");
             }
 
-            _configuration.ShouldSkipProperty(new PropertyInfoWrapper( propertyInfo, null));
+            _configuration.SkipProperty(propertyInfo);
 
             return this;
         }

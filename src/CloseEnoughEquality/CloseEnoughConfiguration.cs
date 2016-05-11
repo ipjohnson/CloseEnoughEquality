@@ -337,7 +337,7 @@ namespace CloseEnoughEquality
 
             if(_skipProperties != null)
             {
-                var match = _skipProperties.LastOrDefault(s => s.Matches(propertyInfo) && propertyInfo.PropertyType.GetTypeInfo().IsAssignableFrom(s.Value.GetTypeInfo()));
+                var match = _skipProperties.LastOrDefault(s => s.Matches(propertyInfo) && s.Value.GetTypeInfo().IsAssignableFrom(propertyInfo.PropertyType.GetTypeInfo()));
 
                 if(match != null)
                 {
