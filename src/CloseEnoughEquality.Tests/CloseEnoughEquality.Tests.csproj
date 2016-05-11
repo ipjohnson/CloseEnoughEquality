@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicTests\ByteEqualityTests.cs" />
+    <Compile Include="BasicTests\CircularReferenceTests.cs" />
     <Compile Include="BasicTests\DateTimeEqualityTests.cs" />
     <Compile Include="BasicTests\DecimalEqualityTests.cs" />
     <Compile Include="BasicTests\DictionaryEqualityTest.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="BasicTests\StringEqualityTests.cs" />
     <Compile Include="BasicTests\UIntEqualityTests.cs" />
     <Compile Include="BasicTests\ULongEqualityTests.cs" />
+    <Compile Include="Classes\Basic\CircularReferenceClasses.cs" />
     <Compile Include="Classes\Basic\EnumClass.cs" />
     <Compile Include="Classes\Basic\ListClasses.cs" />
     <Compile Include="Classes\Basic\NestedClass.cs" />

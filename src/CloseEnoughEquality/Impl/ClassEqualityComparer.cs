@@ -20,6 +20,7 @@ namespace CloseEnoughEquality.Impl
         }
 
         private ICloseEnoughConfiguration _configuration;
+        private List<object> _visitedObjects = new List<object>();
 
         public bool GeneratesDiscrepancy { get { return true; } }
 
@@ -43,6 +44,16 @@ namespace CloseEnoughEquality.Impl
             {
                 return false;
             }
+
+            for(int i = 0; i < _visitedObjects.Count; i++)
+            {
+                if(ReferenceEquals( _visitedObjects[i], left))
+                {
+                    return true;
+                }
+            }
+
+            _visitedObjects.Add(left);
 
             if (left.GetType() == right.GetType() && _configuration.UseCustomEquals(property))
             {
