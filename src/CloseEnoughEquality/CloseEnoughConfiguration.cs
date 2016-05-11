@@ -337,7 +337,7 @@ namespace CloseEnoughEquality
 
             if(_skipProperties != null)
             {
-                var match = _skipProperties.LastOrDefault(s => s.Matches(propertyInfo) && s.Value.GetTypeInfo().IsAssignableFrom(propertyInfo.PropertyType.GetTypeInfo()));
+                var match = _skipProperties.LastOrDefault(s => CheckForMatchingProperty(s, propertyInfo));
 
                 if(match != null)
                 {
@@ -493,5 +493,63 @@ namespace CloseEnoughEquality
 
             return CloseEnoughEquality.DateTimeComparisonMode.Millisecond;
         }
+
+        private bool CheckForMatchingProperty(PropertyFilteredConfiguration<Type> s, IPropertyInfo propertyInfo)
+        {
+            if(!s.Matches(propertyInfo))
+            {
+                return false;
+            }
+
+            var sTypeInfo = s.Value.GetTypeInfo();
+            
+            if(sTypeInfo.IsGenericType && sTypeInfo.IsGenericTypeDefinition)
+            {
+                if(sTypeInfo.IsInterface)
+                {
+                    var pTypeInfo = propertyInfo.PropertyType.GetTypeInfo();
+
+                    if (pTypeInfo.IsInterface)
+                    {
+                        if(propertyInfo.PropertyType.IsConstructedGenericType && 
+                           pTypeInfo.GetGenericTypeDefinition() == s.Value)
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        foreach (var interfaceType in propertyInfo.PropertyType.GetTypeInfo().ImplementedInterfaces)
+                        {
+                            if (interfaceType.IsConstructedGenericType && interfaceType.GetTypeInfo().GetGenericTypeDefinition() == s.Value)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    var currentType = propertyInfo.PropertyType;
+
+                    while(currentType != typeof(object))
+                    {
+                        if(currentType.IsConstructedGenericType && currentType.GetTypeInfo().GetGenericTypeDefinition() == s.Value)
+                        {
+                            return true;
+                        }
+
+                        currentType = currentType.GetTypeInfo().BaseType;
+                    }
+                }
+            }
+            else
+            {
+                return s.Value.GetTypeInfo().IsAssignableFrom(propertyInfo.PropertyType.GetTypeInfo());
+            }
+
+            return false;
+        }
+
     }
 }

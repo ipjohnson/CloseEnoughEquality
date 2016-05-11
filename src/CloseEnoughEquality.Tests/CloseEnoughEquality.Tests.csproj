@@ -85,6 +85,7 @@
     <Compile Include="BasicTests\ULongEqualityTests.cs" />
     <Compile Include="Classes\Basic\CircularReferenceClasses.cs" />
     <Compile Include="Classes\Basic\EnumClass.cs" />
+    <Compile Include="Classes\Basic\GenericClasses.cs" />
     <Compile Include="Classes\Basic\ListClasses.cs" />
     <Compile Include="Classes\Basic\NestedClass.cs" />
     <Compile Include="Classes\Basic\SimpleObject.cs" />
