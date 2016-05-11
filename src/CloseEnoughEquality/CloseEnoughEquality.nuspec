@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/ipjohnson/CloseEnoughEquality</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple C# library to test if two objects are close enough to be considered equal.</description>
-    <releaseNotes>This release fixes a problem with circular references as well as the ability to compare DateTime by minute, hour, date and others</releaseNotes>
+    <releaseNotes>This release fixes an issue with SkipPropertiesOfType as well as adding support for skipping open generics</releaseNotes>
     <copyright>Copyright ©  2016</copyright>
     <tags>.net Equality deep compare</tags>
     <dependencies />
