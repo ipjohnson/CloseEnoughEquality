@@ -73,7 +73,8 @@ namespace CloseEnoughEquality.Impl
                 }
 
                 if (equalsMethod != null &&
-                   equalsMethod.DeclaringType != typeof(object))
+                    equalsMethod.DeclaringType != typeof(object) &&
+                   !equalsMethod.DeclaringType.IsAnonymousType())
                 {
                     return (bool)equalsMethod.Invoke(left, new object[] { right });
                 }

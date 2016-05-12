@@ -21,6 +21,26 @@ namespace CloseEnoughEquality.Tests.BasicTests
             var simpleObject2 = new SimpleObject { DoubleValue = doubleValue2 };
 
             CloseEnough.Equals(simpleObject1, simpleObject2).Should().Be(isEqual);
-        }        
+        }  
+        
+        [Fact]
+        public void CloseEnoug_DoubleEpsilonEqual_ReturnsTrue()
+        {
+            var object1 = new { DoubleValue = 3.0, StringProp = "Hello" };
+            var object2 = new { DoubleValue = 2.99, StringProp = "Hello" };
+
+            Assert.True(CloseEnough.Equals(object1, object2, c => c.DoubleEpsilon(0.01)));
+            Assert.True(CloseEnough.Equals(object1, object2, c => c.DoubleEpsilon(0.01, ForProperties.EndsWith("Value"))));
+        }
+        
+        [Fact]
+        public void CloseEnoug_DoubleEpsilonNotEqual_ReturnsFalse()
+        {
+            var object1 = new { DoubleValue = 3.0, StringProp = "Hello" };
+            var object2 = new { DoubleValue = 2.9, StringProp = "Hello" };
+
+            Assert.False(CloseEnough.Equals(object1, object2, c => c.DoubleEpsilon(0.01)));
+            Assert.False(CloseEnough.Equals(object1, object2, c => c.DoubleEpsilon(0.01, ForProperties.EndsWith("Prop"))));
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace CloseEnoughEquality.Impl
                     rightDouble = (double)right;
                 }
 
-                return Math.Abs(leftDouble - rightDouble) <= _configuration.FloatEpsilon(property);
+                return Math.Abs(leftDouble - rightDouble) <= _configuration.DoubleEpsilon(property);
             }
             catch (Exception)
             {

@@ -21,5 +21,24 @@ namespace CloseEnoughEquality.Tests.BasicTests
 
             CloseEnough.Equals(simpleObject1, simpleObject2).Should().Be(isEqual);
         }
+
+        [Fact]
+        public void CloseEnough_DecimalEpsilonEqual_ReturnTrue()
+        {
+            var object1 = new { DecimalValue = 3.0m, StringProp = "Hello" };
+            var object2 = new { DecimalValue = 2.99m, StringProp = "Hello" };
+
+            Assert.True(CloseEnough.Equals(object1, object2, c => c.DecimalEpsilon(0.01m)));
+            Assert.True(CloseEnough.Equals(object1, object2, c => c.DecimalEpsilon(0.01m, ForProperties.EndsWith("Value"))));
+        }
+        
+        [Fact]
+        public void CloseEnough_DecimalEpsilonNotEqual_ReturnFalse()
+        {
+            var object1 = new { DecimalValue = 3.0m, StringProp = "Hello" };
+            var object2 = new { DecimalValue = 2.9m, StringProp = "Hello" };
+
+            Assert.False(CloseEnough.Equals(object1, object2, c => c.DecimalEpsilon(0.01m)));
+        }
     }
 }

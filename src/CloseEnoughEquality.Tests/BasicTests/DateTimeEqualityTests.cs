@@ -55,6 +55,16 @@ namespace CloseEnoughEquality.Tests.BasicTests
             CloseEnough.Equals(now, today, c => c.DateTimeComparisonMode(DateTimeComparisonMode.Day)).Should().BeTrue();
         }
 
+
+        [Fact]
+        public void CloseEnough_ObjectDateTimeCompareDate_ReturnsTrue()
+        {
+            var class1 = new { Date = DateTime.Now };
+            var class2 = new { Date = class1.Date };
+            
+            CloseEnough.Equals(class1, class2, c => c.DateTimeComparisonMode(DateTimeComparisonMode.Day)).Should().BeTrue();
+        }
+
         [Fact]
         public void CloseEnough_DateTimeCompareDate_ReturnsFalse()
         {
