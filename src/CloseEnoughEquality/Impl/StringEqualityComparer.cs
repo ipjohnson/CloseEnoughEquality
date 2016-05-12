@@ -43,7 +43,7 @@ namespace CloseEnoughEquality.Impl
                     rightValue = (string)right;
                 }
 
-                if(caseInsensitive)
+                if(!caseInsensitive)
                 {
                     return string.Compare(leftValue, rightValue, StringComparison.OrdinalIgnoreCase) == 0;
                 }
