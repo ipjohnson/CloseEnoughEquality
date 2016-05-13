@@ -45,6 +45,14 @@ namespace CloseEnoughEquality
         ICloseEnoughConfigurationSyntax<T> StringCaseSensitive(bool value = true, Func<IPropertyInfo, bool> filter = null);
 
         /// <summary>
+        /// String empty equal to null, true by default
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        ICloseEnoughConfigurationSyntax<T> StringEmptyEqualToNull(bool value = true, Func<IPropertyInfo, bool> filter = null);
+
+        /// <summary>
         /// Float epsilon, used when comparing floats
         /// </summary>
         /// <param name="epsilon"></param>
@@ -228,6 +236,13 @@ namespace CloseEnoughEquality
         public ICloseEnoughConfigurationSyntax<T> StringCaseSensitive(bool value = true, Func<IPropertyInfo, bool> filter = null)
         {
             _configuration.StringCaseSensitive(value, filter);
+
+            return this;
+        }
+
+        public ICloseEnoughConfigurationSyntax<T> StringEmptyEqualToNull(bool value = true, Func<IPropertyInfo, bool> filter = null)
+        {
+            _configuration.StringEmptyEqualToNull(value, filter);
 
             return this;
         }

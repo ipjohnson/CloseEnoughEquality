@@ -25,7 +25,6 @@ namespace CloseEnoughEquality.Impl
         public bool Equals(object left, object right, IPropertyInfo property)
         {
             bool allowTypeConversion = _configuration.AllowTypeConversion(property);
-            bool caseInsensitive = _configuration.StringCaseSensitive(property);
 
             try
             {
@@ -43,7 +42,16 @@ namespace CloseEnoughEquality.Impl
                     rightValue = (string)right;
                 }
 
-                if(!caseInsensitive)
+                if(string.IsNullOrEmpty(leftValue) && 
+                   string.IsNullOrEmpty(rightValue) && 
+                   _configuration.StringEmptyEqualToNull(property))
+                {
+                    return true;
+                }
+
+                bool caseInsensitive = _configuration.StringCaseSensitive(property);
+
+                if (!caseInsensitive)
                 {
                     return string.Compare(leftValue, rightValue, StringComparison.OrdinalIgnoreCase) == 0;
                 }

@@ -16,6 +16,8 @@ namespace CloseEnoughEquality
 
         void StringCaseSensitive(bool value, Func<IPropertyInfo, bool> filter);
 
+        void StringEmptyEqualToNull(bool value, Func<IPropertyInfo, bool> filter);
+
         void DateTimeComparisonMode(DateTimeComparisonMode mode, Func<IPropertyInfo, bool> filter);
 
         DateTimeComparisonMode DateTimeComparisonMode(IPropertyInfo property);
@@ -43,6 +45,8 @@ namespace CloseEnoughEquality
         bool AllowTypeConversion(IPropertyInfo property);
 
         bool StringCaseSensitive(IPropertyInfo property);
+
+        bool StringEmptyEqualToNull(IPropertyInfo property);
 
         float FloatEpsilon(IPropertyInfo property);
 
@@ -84,6 +88,7 @@ namespace CloseEnoughEquality
         private List<PropertyFilteredConfiguration<bool>> _allowTypeConversion;
         private List<PropertyFilteredConfiguration<bool>> _ignoreUnmatchedProperties;
         private List<PropertyFilteredConfiguration<bool>> _stringCaseSensitive;
+        private List<PropertyFilteredConfiguration<bool>> _stringEmptyEqualToNull;
         private List<PropertyFilteredConfiguration<bool>> _useCustomEquals;
         private List<PropertyFilteredConfiguration<DateTimeComparisonMode>> _dateTimeComparisonMode;
         private List<PropertyFilteredConfiguration<float>> _floatEpsilon;
@@ -160,6 +165,16 @@ namespace CloseEnoughEquality
             _stringCaseSensitive.Add(new PropertyFilteredConfiguration<bool> { Value = value, Filter = filter });
         }
 
+        public void StringEmptyEqualToNull(bool value, Func<IPropertyInfo, bool> filter)
+        {
+            if(_stringEmptyEqualToNull == null)
+            {
+                _stringEmptyEqualToNull = new List<PropertyFilteredConfiguration<bool>>();
+            }
+
+            _stringEmptyEqualToNull.Add(new PropertyFilteredConfiguration<bool> { Value = value, Filter = filter });
+        }
+        
         public void FloatEpsilon(float epsilon, Func<IPropertyInfo, bool> filter = null)
         {
             if(_floatEpsilon == null)
@@ -271,6 +286,21 @@ namespace CloseEnoughEquality
                 var allow = _stringCaseSensitive.LastOrDefault(f => f.Matches(propertyName));
 
                 if(allow != null)
+                {
+                    return allow.Value;
+                }
+            }
+
+            return true;
+        }
+
+        public bool StringEmptyEqualToNull(IPropertyInfo property)
+        {
+            if(_stringEmptyEqualToNull != null)
+            {
+                var allow = _stringEmptyEqualToNull.LastOrDefault(f => f.Matches(property));
+
+                if (allow != null)
                 {
                     return allow.Value;
                 }
@@ -551,6 +581,5 @@ namespace CloseEnoughEquality
 
             return false;
         }
-
     }
 }

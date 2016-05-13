@@ -36,5 +36,14 @@ namespace CloseEnoughEquality.Tests.BasicTests
 
             CloseEnough.GetDiscrepancies(class1, class2, c => c.StringCaseSensitive(false, ForProperties.EndsWith("String"))).Should().HaveCount(1);
         }
+
+        [Fact]
+        public void CloseEnough_StringEmptyEqualNull_ReturnTrue()
+        {
+            var class1 = new { StringValue = "" };
+            var class2 = new { StringValue = (string)null };
+
+            CloseEnough.Equals(class1, class2).Should().BeTrue();
+        }
     }
 }

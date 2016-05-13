@@ -10,17 +10,32 @@ namespace CloseEnoughEquality
 {
     public static class CloseEnough
     {
-        public static void MustEqual<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
+        public static void MustEqual<TLeft, TRight>(TLeft left, TRight right)
+        {
+            new CloseEnough<TLeft, TRight>(c => c.ThrowsExceptionIfDiscrepancies(true)).Equals(left, right);
+        }
+
+        public static void MustEqual<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration)
         {           
             new CloseEnough<TLeft, TRight>(c => { c.ThrowsExceptionIfDiscrepancies(true); configuration?.Invoke(c); }).Equals(left, right);
         }
 
-        public static IReadOnlyList<ICloseEnoughDiscrepancy> GetDiscrepancies<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
+        public static IReadOnlyList<ICloseEnoughDiscrepancy> GetDiscrepancies<TLeft, TRight>(TLeft left, TRight right)
+        {
+            return new CloseEnough<TLeft, TRight>().GetDiscrepancies(left, right);
+        }
+
+        public static IReadOnlyList<ICloseEnoughDiscrepancy> GetDiscrepancies<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration)
         {
             return new CloseEnough<TLeft, TRight>(configuration).GetDiscrepancies(left, right);
         }
-        
-        public static bool Equals<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration = null)
+
+        public static bool Equals<TLeft, TRight>(TLeft left, TRight right)
+        {
+            return new CloseEnough<TLeft, TRight>().Equals(left, right);
+        }
+
+        public static bool Equals<TLeft, TRight>(TLeft left, TRight right, Action<ICloseEnoughConfigurationSyntax<TLeft>> configuration)
         {
             return new CloseEnough<TLeft, TRight>(configuration).Equals(left, right);
         }
