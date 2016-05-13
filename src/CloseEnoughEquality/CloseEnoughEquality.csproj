@@ -52,6 +52,7 @@
     <Compile Include="Impl\DoubleEqualityComparer.cs" />
     <Compile Include="Impl\EnumEqualityComparer.cs" />
     <Compile Include="Impl\EqualityWrapper.cs" />
+    <Compile Include="Impl\FieldInfoWrapper.cs" />
     <Compile Include="Impl\FilteredConfiguration.cs" />
     <Compile Include="Impl\FloatEqualityComparer.cs" />
     <Compile Include="Impl\GenericEqualityComparer.cs" />

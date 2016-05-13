@@ -352,6 +352,21 @@ namespace CloseEnoughEquality.Impl
                 }
             }
 
+            foreach(var field in propertiesObject.GetType().GetRuntimeFields())
+            {
+                if(!field.IsPublic || field.IsStatic)
+                {
+                    continue;
+                }
+
+                var wrapper = new FieldInfoWrapper(field, propertiesObject);
+                
+                if (!_configuration.ShouldSkipProperty(wrapper))
+                {
+                    returnList.Add(wrapper);
+                }
+            }
+
             return returnList;
         }
 
