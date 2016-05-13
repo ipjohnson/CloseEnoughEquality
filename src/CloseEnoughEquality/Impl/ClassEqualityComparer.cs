@@ -45,9 +45,9 @@ namespace CloseEnoughEquality.Impl
                 return false;
             }
 
-            for(int i = 0; i < _visitedObjects.Count; i++)
+            for (int i = 0; i < _visitedObjects.Count; i++)
             {
-                if(ReferenceEquals( _visitedObjects[i], left))
+                if (ReferenceEquals(_visitedObjects[i], left))
                 {
                     return true;
                 }
@@ -152,7 +152,7 @@ namespace CloseEnoughEquality.Impl
 
                 if (rightProperty == null)
                 {
-                    if (!ignoreMissing &&  _configuration.GenerateDiscrepancy)
+                    if (!ignoreMissing && _configuration.GenerateDiscrepancy)
                     {
                         _configuration.AddMissingPropertyDiscrepancy(_configuration.CurrentPath);
                     }
@@ -167,32 +167,18 @@ namespace CloseEnoughEquality.Impl
                     var leftValue = leftProperty.GetValue();
                     var rightValue = rightProperty.GetValue();
 
-                    if (leftValue != null)
+                    var wrapper = _configuration.GetEqualityWrapper(leftProperty.PropertyType, leftProperty);
+
+                    var localValue = wrapper.Equals(leftValue, rightValue, leftProperty);
+
+                    if (!localValue)
                     {
-                        if (rightValue != null)
-                        {
-                            var wrapper = _configuration.GetEqualityWrapper(leftValue.GetType(), leftProperty);
+                        returnValue = false;
 
-                            var localValue = wrapper.Equals(leftValue, rightValue, leftProperty);
-
-                            if (!localValue)
-                            {
-                                returnValue = false;
-
-                                if (!wrapper.GeneratesDiscrepancy && _configuration.GenerateDiscrepancy)
-                                {
-                                    _configuration.AddDiscrepancy(leftValue, rightValue);
-                                }
-                            }
-                        }
-                        else if (_configuration.GenerateDiscrepancy)
+                        if (!wrapper.GeneratesDiscrepancy && _configuration.GenerateDiscrepancy)
                         {
                             _configuration.AddDiscrepancy(leftValue, rightValue);
                         }
-                    }
-                    else if (rightValue != null && _configuration.GenerateDiscrepancy)
-                    {
-                        _configuration.AddDiscrepancy(leftValue, rightValue);
                     }
                 }
 
@@ -258,7 +244,7 @@ namespace CloseEnoughEquality.Impl
 
                 return false;
             }
-            
+
             bool returnValue = true;
 
             for (int i = 0; i < leftReadOnly.Count; i++)
@@ -272,29 +258,29 @@ namespace CloseEnoughEquality.Impl
                 var wrapper = _configuration.GetEqualityWrapper(leftValue.GetType(), leftProperty);
                 bool found = false;
 
-                for(int j = 0; j < rightList.Count; j++)
+                for (int j = 0; j < rightList.Count; j++)
                 {
                     var rightValue = rightList[j];
 
                     if (leftValue != null)
                     {
                         if (rightValue != null)
-                        {                            
+                        {
                             var localValue = wrapper.Equals(leftValue, rightValue, leftProperty);
 
-                            if(localValue)
+                            if (localValue)
                             {
                                 rightList.RemoveAt(j);
                                 found = true;
-                                break;                                
+                                break;
                             }
                         }
                     }
-                    else if(rightValue == null)
+                    else if (rightValue == null)
                     {
                         found = true;
                         break;
-                    }                
+                    }
                 }
 
                 _configuration.GenerateDiscrepancy = true;
@@ -322,7 +308,7 @@ namespace CloseEnoughEquality.Impl
 
         private bool IsEnumerableType(Type type)
         {
-            if(type.IsArray)
+            if (type.IsArray)
             {
                 return true;
             }
@@ -357,15 +343,15 @@ namespace CloseEnoughEquality.Impl
                 }
             }
 
-            foreach(var field in propertiesObject.GetType().GetRuntimeFields())
+            foreach (var field in propertiesObject.GetType().GetRuntimeFields())
             {
-                if(!field.IsPublic || field.IsStatic)
+                if (!field.IsPublic || field.IsStatic)
                 {
                     continue;
                 }
 
                 var wrapper = new FieldInfoWrapper(field, propertiesObject);
-                
+
                 if (!_configuration.ShouldSkipProperty(wrapper))
                 {
                     returnList.Add(wrapper);
