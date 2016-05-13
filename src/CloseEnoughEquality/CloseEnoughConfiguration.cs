@@ -134,6 +134,7 @@ namespace CloseEnoughEquality
             AddEqualityWrapper<ulong>(new SimpleEqualityComparer<ulong>(this));
             AddEqualityWrapper<bool>(new SimpleEqualityComparer<bool>(this));
             AddEqualityWrapper<TimeSpan>(new SimpleEqualityComparer<TimeSpan>(this));
+            AddEqualityWrapper<Guid>(new SimpleEqualityComparer<Guid>(this));
             AddEqualityWrapper<DateTime>(new DateTimeEqualityComparer(this));
             AddEqualityWrapper<DateTimeOffset>(new SimpleEqualityComparer<DateTimeOffset>(this));
             AddEqualityWrapper<string>(new StringEqualityComparer(this));

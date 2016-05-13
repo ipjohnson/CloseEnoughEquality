@@ -322,6 +322,11 @@ namespace CloseEnoughEquality.Impl
 
         private bool IsEnumerableType(Type type)
         {
+            if(type.IsArray)
+            {
+                return true;
+            }
+
             return type.GetTypeInfo().ImplementedInterfaces.Any(t => t.IsConstructedGenericType &&
                                                                      t.GetTypeInfo().GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }

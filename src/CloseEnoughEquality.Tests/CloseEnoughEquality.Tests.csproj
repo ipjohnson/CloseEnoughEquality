@@ -67,9 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicTests\ArrayEqualityTests.cs" />
     <Compile Include="BasicTests\ByteEqualityTests.cs" />
     <Compile Include="BasicTests\CircularReferenceTests.cs" />
     <Compile Include="BasicTests\FieldEqualityTests.cs" />
+    <Compile Include="BasicTests\GuidEqualityTests.cs" />
     <Compile Include="BasicTests\IgnoreProperties.cs" />
     <Compile Include="BasicTests\DateTimeEqualityTests.cs" />
     <Compile Include="BasicTests\DecimalEqualityTests.cs" />
