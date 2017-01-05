@@ -40,7 +40,7 @@ You can control the precision of double, decimal, and float comparison with the 
   var object2 = new { DoubleValue = 2.99, StringProp = "Hello" };
   
   Assert.True(CloseEnough.Equals(object1, object2, c => c.DoubleEpsilon(0.01));
-  Assert.True(CloseEnough.Equals(object1, object2, c => c.DoubleEpsilon(0.01, ForProperties.EndsWith("Prop")));
+  Assert.True(CloseEnough.Equals(object1, object2, c => c.DoubleEpsilon(0.01, ForProperties.EndsWith("Value")));
 ```
 
 ### DateTimeComparisonMode
