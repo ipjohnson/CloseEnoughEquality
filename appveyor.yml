@@ -1,0 +1,29 @@
+environment:
+  build_version: 2.0.0   
+  COVERALLS_REPO_TOKEN:
+    secure: r08Iz0TaG/Ohv415t3F5NVCU7iNY3qJpIR5s26xSK9gwXuJQZ8yuP/AnpadGisN4
+version: $(build_version)-{build}
+configuration: Release
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '$(build_version).0'
+  assembly_file_version: '$(build_version).{build}'
+  assembly_informational_version: '$(build_version)-Beta{build}'
+before_build:
+ - cmd: cd tests/CloseEnoughEquality.Tests/
+ - cmd: dotnet restore
+ - cmd: cd ../../
+build:
+  project: CloseEnoughEquality.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+after_build:
+- cmd: dotnet pack src/CloseEnoughEquality/project.json -o . -c Release --version-suffix Beta%APPVEYOR_BUILD_NUMBER%
+test_script:
+- cmd: cd tests/CloseEnoughEquality.Tests/
+- cmd: CodeCoverageAppVeyor.cmd
+artifacts:
+- path: CloseEnoughEquality*.nupkg
+  name: CloseEnoughEquality
