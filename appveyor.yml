@@ -11,7 +11,9 @@ assembly_info:
   assembly_file_version: '$(build_version).{build}'
   assembly_informational_version: '$(build_version)-Beta{build}'
 before_build:
- - cmd: cd tests/CloseEnoughEquality.Tests/
+ - cmd: cd src/CloseEnoughEquality/
+ - cmd: dotnet restore
+ - cmd: cd ../../tests/CloseEnoughEquality.Tests/
  - cmd: dotnet restore
  - cmd: cd ../../
 build:
