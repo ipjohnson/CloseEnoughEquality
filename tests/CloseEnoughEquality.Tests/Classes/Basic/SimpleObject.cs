@@ -22,6 +22,8 @@ namespace CloseEnoughEquality.Tests.Classes.Basic
  
         public string StringValue { get; set; }
 
+        public float FloatValue { get; set; }
+
         public double DoubleValue { get; set; }
 
         public decimal DecimalValue { get; set; }
@@ -29,5 +31,6 @@ namespace CloseEnoughEquality.Tests.Classes.Basic
         public DateTime DateTimeValue { get; set; }
 
         public TimeSpan TimeSpanValue { get; set; }
+
     }
 }

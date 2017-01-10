@@ -45,5 +45,14 @@ namespace CloseEnoughEquality.Tests.BasicTests
 
             CloseEnough.Equals(class1, class2).Should().BeTrue();
         }
+        
+        [Fact]
+        public void CloseEnough_StringEmptyEqualNull_ReturnFalse()
+        {
+            var class1 = new { StringValue = "" };
+            var class2 = new { StringValue = (string)null };
+
+            CloseEnough.Equals(class1, class2, syntax => syntax.StringEmptyEqualToNull(false)).Should().BeFalse();
+        }
     }
 }
