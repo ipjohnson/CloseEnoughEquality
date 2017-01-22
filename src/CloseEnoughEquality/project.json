@@ -37,6 +37,9 @@
       }
     }
   },
+  "buildOptions": {
+    "xmlDoc": true
+  },
   "packOptions": {
     "licenseUrl": "https://github.com/ipjohnson/CloseEnoughEquality/blob/master/License.md",
     "projectUrl": "https://github.com/ipjohnson/CloseEnoughEquality",
