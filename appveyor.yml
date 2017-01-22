@@ -9,7 +9,7 @@ assembly_info:
   file: '**\AssemblyInfo.*'
   assembly_version: '$(build_version).0'
   assembly_file_version: '$(build_version).{build}'
-  assembly_informational_version: '$(build_version)-Beta{build}'
+  assembly_informational_version: '$(build_version)'
 before_build:
  - cmd: cd src/CloseEnoughEquality/
  - cmd: dotnet restore
@@ -22,7 +22,7 @@ build:
   publish_nuget_symbols: true
   verbosity: minimal
 after_build:
-- cmd: dotnet pack src/CloseEnoughEquality/project.json -o . -c Release --version-suffix RC%APPVEYOR_BUILD_NUMBER%
+- cmd: dotnet pack src/CloseEnoughEquality/project.json -o . -c Release
 test_script:
 - cmd: cd tests/CloseEnoughEquality.Tests/
 - cmd: CodeCoverageAppVeyor.cmd
