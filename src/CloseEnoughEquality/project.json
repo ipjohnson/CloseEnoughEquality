@@ -36,5 +36,21 @@
         "System.Runtime.Serialization.Primitives": ""
       }
     }
+  },
+  "packOptions": {
+    "licenseUrl": "https://github.com/ipjohnson/CloseEnoughEquality/blob/master/License.md",
+    "projectUrl": "https://github.com/ipjohnson/CloseEnoughEquality",
+    "releaseNotes": "This release is to retarget to .Net Standard 1.0 and PCL 259",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/ipjohnson/CloseEnoughEquality"
+    },
+    "requireLicenseAcceptance": false,
+    "summary": "Simple C# library to test if two objects are close enough to be considered equal.",
+    "tags": [
+      ".net",
+      "Equality",
+      "deep Compare"
+    ]
   }
 }
