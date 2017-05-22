@@ -1,5 +1,6 @@
 environment:
-  build_version: 2.0.0   
+  build_version: 2.0.0
+  Version: $(build_version)-Nightly%APPVEYOR_BUILD_NUMBER%
   COVERALLS_REPO_TOKEN:
     secure: r08Iz0TaG/Ohv415t3F5NVCU7iNY3qJpIR5s26xSK9gwXuJQZ8yuP/AnpadGisN4
 version: $(build_version)-{build}
@@ -11,21 +12,18 @@ assembly_info:
   assembly_file_version: '$(build_version).{build}'
   assembly_informational_version: '$(build_version)'
 before_build:
- - cmd: cd src/CloseEnoughEquality/
- - cmd: dotnet restore
- - cmd: cd ../../tests/CloseEnoughEquality.Tests/
- - cmd: dotnet restore
- - cmd: cd ../../
+- cmd: nuget restore CloseEnoughEquality.sln
 build:
   project: CloseEnoughEquality.sln
   publish_nuget: true
   publish_nuget_symbols: true
   verbosity: minimal
 after_build:
-- cmd: dotnet pack src/CloseEnoughEquality/project.json -o . -c Release
+- cmd: msbuild /t:pack src/CloseEnoughEquality/CloseEnoughEquality.csproj /p:Configuration=Release /p:IncludeSymbols=true /p:PackageOutputPath=..\..\
 test_script:
 - cmd: cd tests/CloseEnoughEquality.Tests/
 - cmd: CodeCoverageAppVeyor.cmd
 artifacts:
 - path: CloseEnoughEquality*.nupkg
   name: CloseEnoughEquality
+os: Visual Studio 2017
