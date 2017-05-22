@@ -60,3 +60,4 @@ String comparison is case sensitive by default, you can make it case insensitive
 
   CloseEnough.Equals(class1, class2, c => c.StringCaseSensitive(false)).Should().BeTrue();
 ```
+[![Build status](https://ci.appveyor.com/api/projects/status/gkua31dk27oi5app?svg=true)](https://ci.appveyor.com/project/ipjohnson/closeenoughequality) [![Build Status](https://travis-ci.org/ipjohnson/CloseEnoughEquality.svg?branch=master)](https://travis-ci.org/ipjohnson/CloseEnoughEquality)
