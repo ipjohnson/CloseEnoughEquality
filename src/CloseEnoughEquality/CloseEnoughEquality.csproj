@@ -1,7 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
+    <Description>Utility library for doing complex equality comparisons</Description>
+    <Authors>Ian Johnson</Authors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Grace.Dynamic</AssemblyName>
+    <AssemblyOriginatorKeyFile>..\Grace.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' AND '$(APPVEYOR)' != 'True'">true</PublicSign>
+    <PackageId>CloseEnoughEquality</PackageId>
+    <PackageReleaseNotes>https://github.com/ipjohnson/CloseEnoughEquality/wiki/Release-Notes</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/ipjohnson/CloseEnoughEquality</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/ipjohnson/CloseEnoughEquality/blob/master/License.md</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ipjohnson/CloseEnoughEquality</RepositoryUrl>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <DebugType>full</DebugType>
   </PropertyGroup>
-
 </Project>
