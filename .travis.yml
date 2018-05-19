@@ -1,0 +1,9 @@
+
+dist: trusty
+language: csharp
+mono: none
+dotnet: 1.1.6
+install:
+  - dotnet restore CloseEnoughEquality.sln
+script:
+- dotnet test -f netcoreapp1.1 tests/CloseEnoughEquality.Tests/CloseEnoughEquality.Tests.csproj
