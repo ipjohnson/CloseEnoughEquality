@@ -12,3 +12,6 @@
 /src/CloseEnoughEquality.Tests/bin/Release
 /src/CloseEnoughEquality.Tests/obj/Release
 /src/CloseEnoughEquality/obj
+/.vs
+/tests/CloseEnoughEquality.Tests/obj
+/tests/CloseEnoughEquality.Tests/bin/Debug/netcoreapp1.1
