@@ -1,5 +1,5 @@
 environment:
-  build_version: 2.0.0
+  build_version: 2.0.1
   Version: $(build_version)
 version: $(build_version)-{build}
 configuration: Release
@@ -14,12 +14,8 @@ before_build:
 build:
   project: CloseEnoughEquality.sln
   publish_nuget: true
-  publish_nuget_symbols: true
   verbosity: minimal
 test:
   assemblies:
     - '**\*.tests.dll'
-artifacts:
-- path: CloseEnoughEquality*.nupkg
-  name: CloseEnoughEquality
 os: Visual Studio 2022
