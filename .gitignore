@@ -15,3 +15,4 @@
 /.vs
 /tests/CloseEnoughEquality.Tests/obj
 /tests/CloseEnoughEquality.Tests/bin/Debug/netcoreapp1.1
+/tests/CloseEnoughEquality.Tests/bin/Debug/net6

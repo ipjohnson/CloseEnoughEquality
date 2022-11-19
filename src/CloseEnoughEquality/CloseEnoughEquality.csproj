@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Utility library for doing complex equality comparisons</Description>
     <Authors>Ian Johnson</Authors>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

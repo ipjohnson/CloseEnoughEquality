@@ -1,15 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>net6</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="4.19.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="SimpleFixture.NSubstitute" Version="3.0.1" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="FluentAssertions" Version="6.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
+    <PackageReference Include="SimpleFixture.NSubstitute" Version="4.0.0-RC190" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
